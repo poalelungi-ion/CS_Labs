@@ -1,4 +1,4 @@
-> # *Design Patterns*
+> CS-2021 SBT
 >
 > FAF 193 Y3-S1
 >
@@ -6,318 +6,52 @@
 
 
 
+Security benchmarking tool made with:
 
-### **Creational design patterns**
+- Electron 
+- React - TS ( UI library - antd)
+- Express (multer for file storage)
+- PassportJS (for OAuth authentication - Google, GitHub, Twitter)
+- MongoDB (mongoose odm)
 
-Creational patterns provide various object creation mechanisms, which increase flexibility and reuse of existing code.
+-----------------------------------------
 
-**Singleton** is a creational design pattern, which ensures that only one object of its kind exists and provides a single point of access to it for any other code. Singleton has almost the same pros and cons as global variables. Although they’re super-handy, they break the modularity of your code and it could be implemented as follows:
+##### [1 - Importing  Compliance  Audit  Policies](./tasks/CS_Lab1.pdf)
 
-```typescript
-namespace SingletonPattern {
-    export class Singleton {
-        private static _instance: Singleton;
+##### [2 - Creating  Custom  Audit  Policies](./tasks/CS_Lab2.pdf)
 
-        private constructor() {}
+##### [3 - Auditing  a  Workstation](./tasks/CS_Lab3.pdf)
 
-        public static getInstance(): Singleton {
-            if (!Singleton._instance) {
-                Singleton._instance = new Singleton();
-            }
-            return Singleton._instance;
-        }
-    }
-}
-```
+##### [4 - Enforcing a Policy](./tasks/CS_Lab4.pdf)
 
-**Builder** is a creational design pattern, which allows constructing complex objects step by step. Unlike other creational patterns, Builder doesn’t require products to have a common interface. That makes it possible to produce different products using the same construction process. It could be implemented as follows:
+##### [5 - Enforcing a Policy (cont'd)](./tasks/CS_Lab5.pdf)
 
-```typescript
-namespace BuilderPattern {
-    export class RestaurantBuilder {
-        private readonly name: string;
-        private address: string;
-
-        constructor(name: string) {
-            this.name = name;
-        }
-
-        get Name() {
-            return this.name;
-        }
-
-        setAddress(val: string) {
-            this.address = val;
-            return this;
-        }
-
-        get Address() {
-            return this.address;
-        }
-
-        // ... other attributes
-        
-        build(): Restaurant {
-            return new Restaurant(this);
-        }
-    }
-
-    export class Restaurant {
-        private readonly name: string;
-        private readonly address: string;
-        private readonly rating: number;
-        private readonly cooksNo: number;
-        private readonly waitersNo: number;
-
-        constructor(builder: RestaurantBuilder) {
-            this.name = builder.Name;
-            this.address = builder.Address;
-            this.rating = builder.Rating;
-            this.cooksNo = builder.CooksNo;
-            this.waitersNo = builder.WaitersNo;
-        }
-
-        get Name() {
-            return this.name;
-        }
-        // ... other attributes
-    }
-}
-```
-
-**Factory method** is a creational design pattern which solves the problem of creating product objects without specifying their concrete classes. Factory Method defines a method, which should be used for creating objects instead of direct constructor call (`new` operator). Subclasses can override this method to change the class of objects that will be created. It could be implemented as follows:
-
-```typescript
-namespace FactoryMethodPattern {
-
-    /***
-     * Types of food in our Food factory
-     * */
-    export enum FoodTypesEnum {
-        MEAT = 'MEAT',
-        VEGETABLE = 'VEGETABLE'
-    }
-
-    /***
-     * Abstract interface of a concrete product (food) from our factory
-     * */
-    export interface IFood {
-        name: string;
-        preparationTime: number;
-        type: FoodTypesEnum;
-
-        prepare(args?: any): void;
-    }
-
-    /***
-     * The method on both Concrete products will do the same thing, so we can use inheritance
-     * where Food class implements the Abstract product (IFood)
-     * */
-    export class Food implements IFood {
-        name: string;
-        preparationTime: number;
-        type: FoodTypesEnum;
-
-        constructor(name: string, time: number, type: FoodTypesEnum) {
-            this.name = name;
-            this.preparationTime = time;
-            this.type = type;
-        }
-
-        prepare(args?: any): void {
-            console.log(`${this.type} Food: ${this.name} was prepared in: ${this.preparationTime} time units.`);
-        }
-    }
-
-    /***
-     * Concrete products
-     * */
-    export class VegetableFood extends Food {
-        constructor(name: string, time: number, type: FoodTypesEnum) {
-            super(name, time, type);
-        }
-    }
-
-    export class MeatFood extends Food {
-        constructor(name: string, time: number, type: FoodTypesEnum) {
-            super(name, time, type);
-        }
-    }
-
-    /***
-     * Our Food Factory
-     * */
-    export namespace FoodFactory {
-        export const createFood = (type: FoodTypesEnum, name: string, time: number) => {
-            switch (type) {
-                case FactoryMethodPattern.FoodTypesEnum.MEAT: {
-                    return new MeatFood(name, time, type);
-                }
-                case FoodTypesEnum.VEGETABLE: {
-                    return new VegetableFood(name, time, type);
-                }
-                default: {
-                    throw new Error(`No such food type: ${type}`);
-                }
-            }
-        };
-    }
-}
-```
+##### [6 - SSO Security](./tasks/CS_Lab6.pdf)
 
 
 
-### **Structural design patterns**
+##### Demo
 
-In software engineering, the Structural Design Patterns are concerned with how classes and objects are composed to form larger structures. Structural class patterns use inheritance to create a hierarchy of classes/abstractions, but the structural object patterns use composition which is generally a more flexible alternative to inheritance.
+#####  [ lab1 - lab2 ]
 
-**Facade** is a structural design pattern that provides a simplified (but limited) interface to a complex system of classes, library or framework and it could be implemented as follows:
+![recording1](https://github.com/poalelungi-ion/CS-Labs/blob/main/recordings/recording1.gif)
 
-```typescript
-namespace FacadePattern {
-    export interface IShape {
-        draw(): string;
-    }
+**[ lab1 - lab2 - lab3 ]**
 
-    class Square implements IShape {
-        public draw(): string {
-            return 'square - ⬜';
-        }
-    }
+Scan result are represented as icons, where green checkbox is a passed test, red - failed, yellow is warning this means that the values from expected are not the same but still is valid the optional "CAN_NOT_BE_NULL" || "CAN_BE_NULL"
 
-    class Circle implements IShape {
-        public draw(): string {
-            return 'circle - ◯';
-        }
-    }
+![recording2](https://github.com/poalelungi-ion/CS-Labs/blob/main/recordings/gif3.gif)
 
-    export class ShapeFacade {
-        private circle: Circle;
-        private square: Square;
 
-        constructor() {
-            this.circle = new Circle();
-            this.square = new Square();
-        }
+**[ lab 4 - lab 5 ]**
 
-        public drawCircle(): string {
-            return this.circle.draw();
-        }
+As a backup system, the application will export all current system registry key : HKLM, HKCU, HKCR, HKU and HKCC to a folder on desktop (ex: `regedit-backup1632761699`). In case something is wrong with the process, user can always rollback to the previous registry keys and import those files by opening them. The user can apply a single fix on just a single item from list and immediately see the scan result for it and once the toggle switch "select all failed items" is true, then the user can run a batch fix for all of the failed items, as well live results are immediately displayed 
 
-        public drawSquare(): string {
-            return this.square.draw();
-        }
-        
-        // ... other facade parts methods
-    }
+![recording4](https://github.com/poalelungi-ion/CS-Labs/blob/main/recordings/lab4.gif)
 
-}
-```
+**[ lab 6 ]**
 
-**Adapter** is a structural design pattern, which allows incompatible objects to collaborate. The Adapter acts as a wrapper between two objects. It catches calls for one object and transforms them to format and interface recognizable by the second object. It could be implemented as follows:
+Added OAuth authentication, the providers are Google, Twitter and GitHub. The raw `passportjs` provided user data can be directly view on main screen
 
-```typescript
-namespace AdapterPattern {
-    export interface ITarget {
-        getMessage(): string;
-    }
-
-    export class Target implements ITarget {
-        getMessage(): string {
-            return 'Default message from Target class';
-        }
-    }
-
-    export class Adaptee {
-        public getAdapteeMessage() {
-            return 'Message from adaptee: zdarova';
-        }
-    }
-
-    export class Adapter extends Target {
-        private _adaptee: Adaptee;
-
-        constructor(adaptee: Adaptee) {
-            super();
-            this._adaptee = adaptee;
-        }
-
-        public getMessage(): string {
-            const result = this._adaptee.getAdapteeMessage().toUpperCase()
-            return `Adapter Upper case message: ${result}`
-        }
-    }
-}
-```
-
-**Proxy** is a structural design pattern that provides an object that acts as a substitute for a real service object used by a client. A proxy receives client requests, does some work (access control, caching, etc.) and then passes the request to a service object. It could be implemented as follows:
-
-```typescript
-namespace ProxyPattern {
-
-    export interface IService {
-        getUserData(params?: any): void;
-    }
-
-    /***
-     * Real subject (service) the proxy will redirect to
-     * */
-    export class SensitiveUserService implements IService {
-        getUserData() {
-            return {'username': 'nichitaa', 'password': 'strongPassword', 'university': 'UTM'};
-        }
-    }
-
-    /***
-     * Proxy with simple auth / load balance / caching
-     * */
-    export class Proxy implements IService {
-        private readonly proxyName: string;
-        private userService: SensitiveUserService;
-        private limit: number; // max number of requests
-        private cachedData: any;
-
-        constructor(name: string) {
-            this.proxyName = name;
-            this.userService = new SensitiveUserService();
-            this.limit = 2;
-            this.cachedData = null;
-        }
-
-        getUserData(authToken: string) {
-            if (this.checkAuth(authToken)) {
-                if (this.loadBalance()) {
-                    if (this.cache()) {
-                        // all checks have passed, do redirect to the real service
-                        this.cachedData = this.userService.getUserData();
-                        return this.cachedData;
-                    } else {
-                        return this.cachedData;
-                    }
-                } else {
-                    return `[${this.proxyName}] No more available requests`;
-                }
-            } else {
-                return `[${this.proxyName}] Not Authorized`;
-            }
-        }
-
-        cache() {
-            return !this.cachedData;
-        }
-
-        loadBalance() {
-            if (this.limit === 0) return false;
-            else {
-                this.limit--;
-                return true;
-            }
-        }
-
-        checkAuth(token: string) {
-            return token === 'securedToken';
-        }
-    }
-}
-```
+![recording6](https://github.com/poalelungi-ion/CS-Labs/blob/main/recordings/lab6.gif)
 
